@@ -1,9 +1,16 @@
-import { PrimaryGeneratedColumn, BaseEntity, Column, Entity } from "typeorm";
+import { Pizza } from "src/pizzas/entities/pizza.entity";
+import {
+  PrimaryGeneratedColumn,
+  BaseEntity,
+  Column,
+  Entity,
+  OneToMany,
+} from "typeorm";
 
 @Entity()
 export class User extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
   @Column()
   first_name: string;
@@ -13,4 +20,12 @@ export class User extends BaseEntity {
 
   @Column()
   email: string;
+
+  @Column()
+  address: string;
+
+  @Column()
+  postal_code: string;
+
+  @OneToMany((type) => Pizza, (pizza) => pizza.user) pizzas: Pizza[];
 }
