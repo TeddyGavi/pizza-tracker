@@ -10,11 +10,14 @@ exports.PizzasModule = void 0;
 const common_1 = require("@nestjs/common");
 const pizzas_service_1 = require("./pizzas.service");
 const pizzas_controller_1 = require("./pizzas.controller");
+const typeorm_1 = require("@nestjs/typeorm");
+const pizza_entity_1 = require("./entities/pizza.entity");
 let PizzasModule = class PizzasModule {
 };
 exports.PizzasModule = PizzasModule;
 exports.PizzasModule = PizzasModule = __decorate([
     (0, common_1.Module)({
+        imports: [typeorm_1.TypeOrmModule.forFeature([pizza_entity_1.Pizza])],
         controllers: [pizzas_controller_1.PizzasController],
         providers: [pizzas_service_1.PizzasService],
     })

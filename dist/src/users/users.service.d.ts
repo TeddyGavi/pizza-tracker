@@ -6,6 +6,7 @@ export declare class UsersService {
     private userRepository;
     constructor(userRepository: Repository<User>);
     create(createUserDto: CreateUserDto): Promise<User>;
+    createOrUpdate(userDto: CreateUserDto): Promise<User>;
     findAll(): string;
     findOne(id: number): string;
     update(id: number, updateUserDto: UpdateUserDto): string;

@@ -15,11 +15,11 @@ export class Consumption extends BaseEntity {
   id: string;
 
   @ManyToOne(() => Pizza, (pizza) => pizza.consumption)
-  @JoinColumn()
+  @JoinColumn({ name: "pizza_id" })
   pizza: Pizza;
 
   @ManyToOne(() => User, (user) => user.consumptions)
-  @JoinColumn()
+  @JoinColumn({ name: "user_id" })
   user: User;
 
   @Column({ type: "datetime" })

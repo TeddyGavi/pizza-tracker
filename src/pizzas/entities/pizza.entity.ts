@@ -19,6 +19,5 @@ export class Pizza extends BaseEntity {
   meat_type: string;
 
   @OneToOne(() => Consumption, (consumption) => consumption.pizza)
-  @JoinColumn()
   consumption: Consumption;
 }

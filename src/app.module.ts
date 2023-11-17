@@ -10,11 +10,13 @@ import { ConsumptionModule } from "./consumption/consumption.module";
 import { SeederService } from "db/seed.service";
 import { CsvService } from "db/csv.service";
 import { DBModule } from "db/db.module";
+import { ConsumptionService } from "./consumption/consumption.service";
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
+      // url: process.env.DATABASE_URL,
       type: "mysql",
       host: process.env.DATABASE_HOST,
       port: 3306,

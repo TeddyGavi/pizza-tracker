@@ -1,3 +1,3 @@
 export declare class CreatePizzaDto {
-    "meat_type": string;
+    meat_type: string;
 }

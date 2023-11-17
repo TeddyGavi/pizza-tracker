@@ -8,5 +8,5 @@ export class CreateConsumptionDto {
   pizza: string;
 
   @IsDate()
-  "consumed_at": Date;
+  consumed_at: Date;
 }

@@ -1,11 +1,11 @@
 import { Consumption } from "src/consumption/entities/consumption.entity";
-import { Pizza } from "src/pizzas/entities/pizza.entity";
 import {
   PrimaryGeneratedColumn,
   BaseEntity,
   Column,
   Entity,
   OneToMany,
+  JoinColumn,
 } from "typeorm";
 
 @Entity()

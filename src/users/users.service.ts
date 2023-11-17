@@ -15,6 +15,20 @@ export class UsersService {
     const newUser = this.userRepository.create(createUserDto);
     return await this.userRepository.save(newUser);
   }
+  async createOrUpdate(userDto: CreateUserDto): Promise<User> {
+    const existingUser = await this.userRepository.findOne({
+      where: {
+        name: userDto.name,
+      },
+    });
+
+    if (existingUser) {
+      existingUser.name = userDto.name;
+      return await this.userRepository.save(existingUser);
+    }
+    const newUser = await this.userRepository.create(userDto);
+    return await this.userRepository.save(newUser);
+  }
   // TODO: all of these!
   findAll() {
     return `This action returns all users`;
