@@ -22,24 +22,26 @@ export class ConsumptionService {
   async createOrUpdate(
     consumptionDto: CreateConsumptionDto,
   ): Promise<Consumption> {
-    const existingConsumption = await this.consumptionRepository.findOne({
-      where: {
-        userId: consumptionDto.userId,
-        pizzaId: consumptionDto.pizzaId,
-        consumed_at: consumptionDto.date,
-      },
-    });
+    const existingConsumption = await this.consumptionRepository
+      .createQueryBuilder("consumption")
+      .leftJoinAndSelect("consumption.userId", "user")
+      .where("user.id = :userId", { userId: consumptionDto.userId })
+      .getOne();
 
+    console.log(existingConsumption);
     if (existingConsumption) {
       existingConsumption.userId = consumptionDto.userId;
       existingConsumption.pizzaId = consumptionDto.pizzaId;
-      existingConsumption.date = consumptionDto.date;
+      existingConsumption.consumed_at = consumptionDto.consumed_at;
 
       return await this.consumptionRepository.save(existingConsumption);
     }
 
-    const newConsumption: DeepPartial<Consumption> =
-      this.consumptionRepository.create(consumptionDto);
+    const newConsumption = this.consumptionRepository.create({
+      userId: consumptionDto.userId,
+      pizzaId: consumptionDto.pizzaId,
+      consumed_at: consumptionDto.consumed_at,
+    });
     return await this.consumptionRepository.save(newConsumption);
   }
 

@@ -8,5 +8,6 @@ import { Consumption } from "./entities/consumption.entity";
   imports: [TypeOrmModule.forFeature([Consumption])],
   controllers: [ConsumptionController],
   providers: [ConsumptionService],
+  exports: [ConsumptionService],
 })
 export class ConsumptionModule {}

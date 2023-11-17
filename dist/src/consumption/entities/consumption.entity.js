@@ -22,11 +22,13 @@ __decorate([
 ], Consumption.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => pizza_entity_1.Pizza, (pizza) => pizza.consumption),
-    __metadata("design:type", pizza_entity_1.Pizza)
+    (0, typeorm_1.JoinColumn)({ name: "pizzaId" }),
+    __metadata("design:type", String)
 ], Consumption.prototype, "pizzaId", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => user_entity_1.User, (user) => user.consumptions),
-    __metadata("design:type", user_entity_1.User)
+    (0, typeorm_1.JoinColumn)({ name: "userId" }),
+    __metadata("design:type", String)
 ], Consumption.prototype, "userId", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: "datetime" }),

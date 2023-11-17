@@ -40,7 +40,7 @@ let SeederService = class SeederService {
             const consumptionDto = {
                 userId: user.id,
                 pizzaId: pizza.id,
-                date: new Date(csvData[data].date),
+                consumed_at: new Date(csvData[data].date),
             };
             await this.ConsumptionService.createOrUpdate(consumptionDto);
         }

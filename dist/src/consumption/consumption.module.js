@@ -20,6 +20,7 @@ exports.ConsumptionModule = ConsumptionModule = __decorate([
         imports: [typeorm_1.TypeOrmModule.forFeature([consumption_entity_1.Consumption])],
         controllers: [consumption_controller_1.ConsumptionController],
         providers: [consumption_service_1.ConsumptionService],
+        exports: [consumption_service_1.ConsumptionService],
     })
 ], ConsumptionModule);
 //# sourceMappingURL=consumption.module.js.map

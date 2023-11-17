@@ -37,7 +37,7 @@ export class SeederService implements OnModuleInit {
       const consumptionDto: CreateConsumptionDto = {
         userId: user.id,
         pizzaId: pizza.id,
-        date: new Date(csvData[data].date),
+        consumed_at: new Date(csvData[data].date),
       };
       await this.ConsumptionService.createOrUpdate(consumptionDto);
     }

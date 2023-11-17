@@ -6,7 +6,7 @@ import { PizzasService } from "src/pizzas/pizzas.service";
 import { ConsumptionService } from "src/consumption/consumption.service";
 
 @Module({
-  providers: [CsvService, ConsumptionService],
-  exports: [CsvService, ConsumptionService],
+  providers: [CsvService],
+  exports: [CsvService],
 })
 export class DBModule {}
