@@ -16,10 +16,7 @@ export class Pizza extends BaseEntity {
   id: string;
 
   @Column()
-  "meat_type": string;
-
-  @Column({ type: "datetime" })
-  "created_at": Date;
+  meat_type: string;
 
   @OneToOne(() => Consumption, (consumption) => consumption.pizza)
   @JoinColumn()

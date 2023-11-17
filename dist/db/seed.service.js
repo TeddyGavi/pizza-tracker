@@ -21,6 +21,7 @@ let SeederService = class SeederService {
         console.log("reading the csv file");
         console.log(await this.CsvService.readCSV(this.filePath));
     }
+    async seedDb() { }
 };
 exports.SeederService = SeederService;
 exports.SeederService = SeederService = __decorate([

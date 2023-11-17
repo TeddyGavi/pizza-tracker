@@ -5,4 +5,5 @@ export declare class SeederService implements OnModuleInit {
     private readonly filePath;
     constructor(CsvService: CsvService);
     onModuleInit(): Promise<void>;
+    seedDb(): Promise<void>;
 }

@@ -24,10 +24,6 @@ __decorate([
     __metadata("design:type", String)
 ], Pizza.prototype, "meat_type", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "datetime" }),
-    __metadata("design:type", Date)
-], Pizza.prototype, "created_at", void 0);
-__decorate([
     (0, typeorm_1.OneToOne)(() => consumption_entity_1.Consumption, (consumption) => consumption.pizza),
     (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", consumption_entity_1.Consumption)

@@ -10,4 +10,6 @@ export class SeederService implements OnModuleInit {
     console.log("reading the csv file");
     console.log(await this.CsvService.readCSV(this.filePath));
   }
+
+  async seedDb() {}
 }
