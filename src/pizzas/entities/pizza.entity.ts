@@ -5,8 +5,10 @@ import {
   Column,
   ManyToOne,
   JoinColumn,
+  OneToOne,
 } from "typeorm";
 import { User } from "../../users/entities/user.entity";
+import { Consumption } from "src/consumption/entities/consumption.entity";
 
 @Entity()
 export class Pizza extends BaseEntity {
@@ -14,18 +16,12 @@ export class Pizza extends BaseEntity {
   id: string;
 
   @Column()
-  name: string;
+  "meat_type": string;
 
-  @Column()
-  size: string;
+  @Column({ type: "datetime" })
+  "created_at": Date;
 
-  @Column()
-  custom: string;
-
-  @Column()
-  pizzas: number;
-
-  @ManyToOne((type) => User, (user) => user.pizzas)
-  @JoinColumn({ name: "user_id" })
-  user: User;
+  @OneToOne(() => Consumption, (consumption) => consumption.pizza)
+  @JoinColumn()
+  consumption: Consumption;
 }

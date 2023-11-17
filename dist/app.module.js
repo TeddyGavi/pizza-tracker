@@ -30,7 +30,7 @@ exports.AppModule = AppModule = __decorate([
                 password: process.env.DATABASE_PASSWORD,
                 database: process.env.DATABASE_NAME,
                 entities: [(0, path_1.join)(__dirname, "**", "*.entity.{ts,js}")],
-                synchronize: true,
+                synchronize: false,
                 ssl: {
                     rejectUnauthorized: true,
                 },

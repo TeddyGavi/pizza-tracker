@@ -6,6 +6,7 @@ import { UsersModule } from "./users/users.module";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { join } from "path";
+import { ConsumptionModule } from './consumption/consumption.module';
 
 @Module({
   imports: [
@@ -18,13 +19,14 @@ import { join } from "path";
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
       entities: [join(__dirname, "**", "*.entity.{ts,js}")],
-      synchronize: true,
+      synchronize: false,
       ssl: {
         rejectUnauthorized: true,
       },
     }),
     PizzasModule,
     UsersModule,
+    ConsumptionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

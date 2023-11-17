@@ -1,3 +1,4 @@
+import { Consumption } from "src/consumption/entities/consumption.entity";
 import { Pizza } from "src/pizzas/entities/pizza.entity";
 import {
   PrimaryGeneratedColumn,
@@ -13,19 +14,8 @@ export class User extends BaseEntity {
   id: string;
 
   @Column()
-  first_name: string;
+  name: string;
 
-  @Column()
-  last_name: string;
-
-  @Column()
-  email: string;
-
-  @Column()
-  address: string;
-
-  @Column()
-  postal_code: string;
-
-  @OneToMany((type) => Pizza, (pizza) => pizza.user) pizzas: Pizza[];
+  @OneToMany(() => Consumption, (consumption) => consumption.user)
+  consumptions: Consumption[];
 }
