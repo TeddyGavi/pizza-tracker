@@ -8,5 +8,6 @@ import { Pizza } from "./entities/pizza.entity";
   imports: [TypeOrmModule.forFeature([Pizza])],
   controllers: [PizzasController],
   providers: [PizzasService],
+  exports: [PizzasService],
 })
 export class PizzasModule {}

@@ -26,23 +26,24 @@ let SeederService = class SeederService {
     async onModuleInit() {
         console.log("reading the csv file");
         await this.seedDb();
+        console.log("db update done...");
     }
     async seedDb() {
         const csvData = await this.CsvService.readCSV(this.filePath);
-        const personNames = [];
-        const pizzaMeatType = [];
-        const consumedAt = [];
         for (const data in csvData) {
-            personNames.push(csvData[data].person);
             const userDto = { name: csvData[data].person };
             const user = await this.UserService.createOrUpdate(userDto);
-            pizzaMeatType.push(csvData[data]["meat-type"]);
-            consumedAt.push({
-                name: csvData[data].person,
+            const pizzaDto = {
+                meat_type: csvData[data]["meat-type"],
+            };
+            const pizza = await this.PizzaService.createOrUpdate(pizzaDto);
+            const consumptionDto = {
+                userId: user.id,
+                pizzaId: pizza.id,
                 date: new Date(csvData[data].date),
-            });
+            };
+            await this.ConsumptionService.createOrUpdate(consumptionDto);
         }
-        console.log(personNames, pizzaMeatType, consumedAt);
     }
 };
 exports.SeederService = SeederService;

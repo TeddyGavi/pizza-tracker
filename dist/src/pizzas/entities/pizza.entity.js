@@ -24,7 +24,8 @@ __decorate([
     __metadata("design:type", String)
 ], Pizza.prototype, "meat_type", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => consumption_entity_1.Consumption, (consumption) => consumption.pizza),
+    (0, typeorm_1.OneToOne)(() => consumption_entity_1.Consumption, (consumption) => consumption.pizzaId),
+    (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", consumption_entity_1.Consumption)
 ], Pizza.prototype, "consumption", void 0);
 exports.Pizza = Pizza = __decorate([

@@ -26,7 +26,7 @@ export class UsersService {
       existingUser.name = userDto.name;
       return await this.userRepository.save(existingUser);
     }
-    const newUser = await this.userRepository.create(userDto);
+    const newUser = this.userRepository.create(userDto);
     return await this.userRepository.save(newUser);
   }
   // TODO: all of these!

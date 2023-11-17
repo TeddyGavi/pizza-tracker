@@ -4,7 +4,7 @@ import { UpdateConsumptionDto } from './dto/update-consumption.dto';
 export declare class ConsumptionController {
     private readonly consumptionService;
     constructor(consumptionService: ConsumptionService);
-    create(createConsumptionDto: CreateConsumptionDto): string;
+    create(createConsumptionDto: CreateConsumptionDto): Promise<import("./entities/consumption.entity").Consumption>;
     findAll(): string;
     findOne(id: string): string;
     update(id: string, updateConsumptionDto: UpdateConsumptionDto): string;

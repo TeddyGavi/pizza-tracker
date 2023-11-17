@@ -20,6 +20,7 @@ exports.PizzasModule = PizzasModule = __decorate([
         imports: [typeorm_1.TypeOrmModule.forFeature([pizza_entity_1.Pizza])],
         controllers: [pizzas_controller_1.PizzasController],
         providers: [pizzas_service_1.PizzasService],
+        exports: [pizzas_service_1.PizzasService],
     })
 ], PizzasModule);
 //# sourceMappingURL=pizzas.module.js.map

@@ -2,10 +2,10 @@ import { IsDate, IsString } from "class-validator";
 
 export class CreateConsumptionDto {
   @IsString()
-  user: string;
+  userId: string;
 
   @IsString()
-  pizza: string;
+  pizzaId: string;
 
   @IsDate()
   consumed_at: Date;

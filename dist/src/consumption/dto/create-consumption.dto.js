@@ -17,11 +17,11 @@ exports.CreateConsumptionDto = CreateConsumptionDto;
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], CreateConsumptionDto.prototype, "user", void 0);
+], CreateConsumptionDto.prototype, "userId", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], CreateConsumptionDto.prototype, "pizza", void 0);
+], CreateConsumptionDto.prototype, "pizzaId", void 0);
 __decorate([
     (0, class_validator_1.IsDate)(),
     __metadata("design:type", Date)

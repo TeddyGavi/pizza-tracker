@@ -1,7 +1,12 @@
-import { CreatePizzaDto } from './dto/create-pizza.dto';
-import { UpdatePizzaDto } from './dto/update-pizza.dto';
+import { CreatePizzaDto } from "./dto/create-pizza.dto";
+import { UpdatePizzaDto } from "./dto/update-pizza.dto";
+import { Pizza } from "./entities/pizza.entity";
+import { Repository } from "typeorm";
 export declare class PizzasService {
-    create(createPizzaDto: CreatePizzaDto): string;
+    private pizzaRepository;
+    constructor(pizzaRepository: Repository<Pizza>);
+    create(createPizzaDto: CreatePizzaDto): Promise<Pizza>;
+    createOrUpdate(pizzaDto: CreatePizzaDto): Promise<Pizza>;
     findAll(): string;
     findOne(id: number): string;
     update(id: number, updatePizzaDto: UpdatePizzaDto): string;

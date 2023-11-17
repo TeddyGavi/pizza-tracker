@@ -16,6 +16,6 @@ export class User extends BaseEntity {
   @Column()
   name: string;
 
-  @OneToMany(() => Consumption, (consumption) => consumption.user)
+  @OneToMany(() => Consumption, (consumption) => consumption.userId)
   consumptions: Consumption[];
 }

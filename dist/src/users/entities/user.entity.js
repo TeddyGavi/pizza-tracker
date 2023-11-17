@@ -24,7 +24,7 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "name", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => consumption_entity_1.Consumption, (consumption) => consumption.user),
+    (0, typeorm_1.OneToMany)(() => consumption_entity_1.Consumption, (consumption) => consumption.userId),
     __metadata("design:type", Array)
 ], User.prototype, "consumptions", void 0);
 exports.User = User = __decorate([

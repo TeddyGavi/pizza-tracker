@@ -4,6 +4,8 @@ import { UsersService } from "src/users/users.service";
 import { PizzasService } from "src/pizzas/pizzas.service";
 import { ConsumptionService } from "src/consumption/consumption.service";
 import { CreateUserDto } from "src/users/dto/create-user.dto";
+import { CreatePizzaDto } from "src/pizzas/dto/create-pizza.dto";
+import { CreateConsumptionDto } from "src/consumption/dto/create-consumption.dto";
 
 @Injectable()
 export class SeederService implements OnModuleInit {
@@ -18,24 +20,26 @@ export class SeederService implements OnModuleInit {
   async onModuleInit() {
     console.log("reading the csv file");
     await this.seedDb();
+    console.log("db update done...");
   }
 
   async seedDb() {
     const csvData = await this.CsvService.readCSV(this.filePath);
-    const personNames = [];
-    const pizzaMeatType = [];
-    const consumedAt = [];
     for (const data in csvData) {
-      personNames.push(csvData[data].person);
       const userDto: CreateUserDto = { name: csvData[data].person };
       const user = await this.UserService.createOrUpdate(userDto);
 
-      pizzaMeatType.push(csvData[data]["meat-type"]);
-      consumedAt.push({
-        name: csvData[data].person,
+      const pizzaDto: CreatePizzaDto = {
+        meat_type: csvData[data]["meat-type"],
+      };
+      const pizza = await this.PizzaService.createOrUpdate(pizzaDto);
+
+      const consumptionDto: CreateConsumptionDto = {
+        userId: user.id,
+        pizzaId: pizza.id,
         date: new Date(csvData[data].date),
-      });
+      };
+      await this.ConsumptionService.createOrUpdate(consumptionDto);
     }
-    console.log(personNames, pizzaMeatType, consumedAt);
   }
 }
