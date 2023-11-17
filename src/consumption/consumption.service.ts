@@ -28,7 +28,6 @@ export class ConsumptionService {
       .where("user.id = :userId", { userId: consumptionDto.userId })
       .getOne();
 
-    console.log(existingConsumption);
     if (existingConsumption) {
       existingConsumption.userId = consumptionDto.userId;
       existingConsumption.pizzaId = consumptionDto.pizzaId;
