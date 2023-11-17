@@ -1,9 +1,9 @@
 import * as fs from "fs";
 import * as csv from "csv-parser";
-import { Injectable, Injectable } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 
 @Injectable()
-export class CVS {
+export class CsvService {
   async readCSV(filePath: string): Promise<any[]> {
     const results = [];
 

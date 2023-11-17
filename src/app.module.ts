@@ -6,7 +6,10 @@ import { UsersModule } from "./users/users.module";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { join } from "path";
-import { ConsumptionModule } from './consumption/consumption.module';
+import { ConsumptionModule } from "./consumption/consumption.module";
+import { SeederService } from "db/seed.service";
+import { CsvService } from "db/csv.service";
+import { DBModule } from "db/db.module";
 
 @Module({
   imports: [
@@ -27,8 +30,9 @@ import { ConsumptionModule } from './consumption/consumption.module';
     PizzasModule,
     UsersModule,
     ConsumptionModule,
+    DBModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, SeederService, CsvService],
 })
 export class AppModule {}
