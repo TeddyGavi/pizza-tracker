@@ -18,6 +18,10 @@ export class SeederService implements OnModuleInit {
   ) {}
 
   async onModuleInit() {
+    // await this.UserService.synchronize();
+    // await this.PizzaService.synchronize();
+    // await this.ConsumptionService.synchronize();
+
     console.log("reading the csv file");
     await this.seedDb();
     console.log("db update done...");
@@ -35,10 +39,13 @@ export class SeederService implements OnModuleInit {
       const pizza = await this.PizzaService.createOrUpdate(pizzaDto);
 
       const consumptionDto: CreateConsumptionDto = {
-        userId: user.id,
-        pizzaId: pizza.id,
+        user_id: user.id,
+        pizza_id: pizza.id,
         consumed_at: new Date(csvData[data].date),
       };
+      const countOfConsumptions =
+        await this.ConsumptionService.countExistingRecords();
+      if (countOfConsumptions >= 25) return;
       await this.ConsumptionService.createOrUpdate(consumptionDto);
     }
   }

@@ -1,5 +1,5 @@
 export declare class CreateConsumptionDto {
-    userId: string;
-    pizzaId: string;
+    user_id: string;
+    pizza_id: string;
     consumed_at: Date;
 }

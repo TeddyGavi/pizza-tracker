@@ -9,19 +9,23 @@ import {
 import { Pizza } from "src/pizzas/entities/pizza.entity";
 import { User } from "src/users/entities/user.entity";
 
-@Entity()
+@Entity("consumptions")
 export class Consumption extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @ManyToOne(() => Pizza, (pizza) => pizza.consumption)
-  @JoinColumn({ name: "pizzaId" })
-  pizzaId: string;
+  @ManyToOne(() => Pizza, (pizza) => pizza.consumptions, {
+    onDelete: "CASCADE",
+  })
+  @JoinColumn({ name: "pizza_id" })
+  pizza_id: string;
 
-  @ManyToOne(() => User, (user) => user.consumptions)
-  @JoinColumn({ name: "userId" })
-  userId: string;
+  @ManyToOne(() => User, (user) => user.consumptions, {
+    onDelete: "CASCADE",
+  })
+  @JoinColumn({ name: "user_id" })
+  user_id: string;
 
-  @Column({ type: "datetime" })
+  @Column({ type: "datetime", default: () => "CURRENT_TIMESTAMP" })
   consumed_at: Date;
 }

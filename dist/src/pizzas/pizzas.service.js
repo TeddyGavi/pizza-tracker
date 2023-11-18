@@ -21,13 +21,19 @@ let PizzasService = class PizzasService {
     constructor(pizzaRepository) {
         this.pizzaRepository = pizzaRepository;
     }
+    async synchronize() {
+        await this.pizzaRepository.query(`DROP TABLE IF EXISTS pizzas`);
+        await this.pizzaRepository.query(`CREATE TABLE pizzas (id SERIAL PRIMARY KEY, meat_type VARCHAR(255))`);
+    }
     async create(createPizzaDto) {
         const newPizza = this.pizzaRepository.create(createPizzaDto);
         return await this.pizzaRepository.save(newPizza);
     }
     async createOrUpdate(pizzaDto) {
         const existingPizza = await this.pizzaRepository.findOne({
-            where: { meat_type: pizzaDto.meat_type },
+            where: {
+                meat_type: pizzaDto.meat_type,
+            },
         });
         if (existingPizza) {
             existingPizza.meat_type = pizzaDto.meat_type;

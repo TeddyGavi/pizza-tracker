@@ -8,7 +8,7 @@ import {
   JoinColumn,
 } from "typeorm";
 
-@Entity()
+@Entity("users")
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
@@ -16,6 +16,8 @@ export class User extends BaseEntity {
   @Column()
   name: string;
 
-  @OneToMany(() => Consumption, (consumption) => consumption.userId)
+  @OneToMany(() => Consumption, (consumptions) => consumptions.user_id, {
+    cascade: true,
+  })
   consumptions: Consumption[];
 }

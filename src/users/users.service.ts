@@ -11,6 +11,14 @@ export class UsersService {
     @InjectRepository(User)
     private userRepository: Repository<User>,
   ) {}
+
+  async synchronize() {
+    await this.userRepository.query(`DROP TABLE IF EXISTS users`);
+    await this.userRepository.query(
+      `CREATE TABLE users (id SERIAL PRIMARY KEY, name VARCHAR(255))`,
+    );
+  }
+
   async create(createUserDto: CreateUserDto) {
     const newUser = this.userRepository.create(createUserDto);
     return await this.userRepository.save(newUser);

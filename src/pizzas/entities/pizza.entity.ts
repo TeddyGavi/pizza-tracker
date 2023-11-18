@@ -3,13 +3,12 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  OneToOne,
   JoinColumn,
+  OneToMany,
 } from "typeorm";
-import { User } from "../../users/entities/user.entity";
 import { Consumption } from "src/consumption/entities/consumption.entity";
 
-@Entity()
+@Entity("pizzas")
 export class Pizza extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
@@ -17,7 +16,8 @@ export class Pizza extends BaseEntity {
   @Column()
   meat_type: string;
 
-  @OneToOne(() => Consumption, (consumption) => consumption.pizzaId)
-  @JoinColumn()
-  consumption: Consumption;
+  @OneToMany(() => Consumption, (consumptions) => consumptions.pizza_id, {
+    cascade: true,
+  })
+  consumptions: Consumption[];
 }

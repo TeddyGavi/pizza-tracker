@@ -21,20 +21,24 @@ __decorate([
     __metadata("design:type", String)
 ], Consumption.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => pizza_entity_1.Pizza, (pizza) => pizza.consumption),
-    (0, typeorm_1.JoinColumn)({ name: "pizzaId" }),
+    (0, typeorm_1.ManyToOne)(() => pizza_entity_1.Pizza, (pizza) => pizza.consumptions, {
+        onDelete: "CASCADE",
+    }),
+    (0, typeorm_1.JoinColumn)({ name: "pizza_id" }),
     __metadata("design:type", String)
-], Consumption.prototype, "pizzaId", void 0);
+], Consumption.prototype, "pizza_id", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, (user) => user.consumptions),
-    (0, typeorm_1.JoinColumn)({ name: "userId" }),
+    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, (user) => user.consumptions, {
+        onDelete: "CASCADE",
+    }),
+    (0, typeorm_1.JoinColumn)({ name: "user_id" }),
     __metadata("design:type", String)
-], Consumption.prototype, "userId", void 0);
+], Consumption.prototype, "user_id", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "datetime" }),
+    (0, typeorm_1.Column)({ type: "datetime", default: () => "CURRENT_TIMESTAMP" }),
     __metadata("design:type", Date)
 ], Consumption.prototype, "consumed_at", void 0);
 exports.Consumption = Consumption = __decorate([
-    (0, typeorm_1.Entity)()
+    (0, typeorm_1.Entity)("consumptions")
 ], Consumption);
 //# sourceMappingURL=consumption.entity.js.map

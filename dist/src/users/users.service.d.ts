@@ -5,6 +5,7 @@ import { User } from "./entities/user.entity";
 export declare class UsersService {
     private userRepository;
     constructor(userRepository: Repository<User>);
+    synchronize(): Promise<void>;
     create(createUserDto: CreateUserDto): Promise<User>;
     createOrUpdate(userDto: CreateUserDto): Promise<User>;
     findAll(): string;

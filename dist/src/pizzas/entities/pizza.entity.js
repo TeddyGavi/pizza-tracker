@@ -24,11 +24,12 @@ __decorate([
     __metadata("design:type", String)
 ], Pizza.prototype, "meat_type", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => consumption_entity_1.Consumption, (consumption) => consumption.pizzaId),
-    (0, typeorm_1.JoinColumn)(),
-    __metadata("design:type", consumption_entity_1.Consumption)
-], Pizza.prototype, "consumption", void 0);
+    (0, typeorm_1.OneToMany)(() => consumption_entity_1.Consumption, (consumptions) => consumptions.pizza_id, {
+        cascade: true,
+    }),
+    __metadata("design:type", Array)
+], Pizza.prototype, "consumptions", void 0);
 exports.Pizza = Pizza = __decorate([
-    (0, typeorm_1.Entity)()
+    (0, typeorm_1.Entity)("pizzas")
 ], Pizza);
 //# sourceMappingURL=pizza.entity.js.map

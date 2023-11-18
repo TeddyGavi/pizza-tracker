@@ -21,28 +21,32 @@ let ConsumptionService = class ConsumptionService {
     constructor(consumptionRepository) {
         this.consumptionRepository = consumptionRepository;
     }
+    async synchronize() {
+        await this.consumptionRepository.query(`DROP TABLE IF EXISTS consumptions`);
+        await this.consumptionRepository.query(`CREATE TABLE consumptions (
+  id VARCHAR(36) PRIMARY KEY,
+  pizza_id VARCHAR(36),
+  user_id VARCHAR(36),
+  consumed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (pizza_id) REFERENCES pizzas(id) ON DELETE CASCADE,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);`);
+    }
     async create(createConsumptionDto) {
         const newConsumption = this.consumptionRepository.create(createConsumptionDto);
         return await this.consumptionRepository.save(newConsumption);
     }
     async createOrUpdate(consumptionDto) {
-        const existingConsumption = await this.consumptionRepository
-            .createQueryBuilder("consumption")
-            .leftJoinAndSelect("consumption.userId", "user")
-            .where("user.id = :userId", { userId: consumptionDto.userId })
-            .getOne();
-        if (existingConsumption) {
-            existingConsumption.userId = consumptionDto.userId;
-            existingConsumption.pizzaId = consumptionDto.pizzaId;
-            existingConsumption.consumed_at = consumptionDto.consumed_at;
-            return await this.consumptionRepository.save(existingConsumption);
-        }
         const newConsumption = this.consumptionRepository.create({
-            userId: consumptionDto.userId,
-            pizzaId: consumptionDto.pizzaId,
+            user_id: consumptionDto.user_id,
+            pizza_id: consumptionDto.pizza_id,
             consumed_at: consumptionDto.consumed_at,
         });
         return await this.consumptionRepository.save(newConsumption);
+    }
+    async countExistingRecords() {
+        const count = await this.consumptionRepository.count();
+        return count;
     }
     findAll() {
         return `This action returns all consumption`;

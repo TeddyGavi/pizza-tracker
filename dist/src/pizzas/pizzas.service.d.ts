@@ -5,6 +5,7 @@ import { Repository } from "typeorm";
 export declare class PizzasService {
     private pizzaRepository;
     constructor(pizzaRepository: Repository<Pizza>);
+    synchronize(): Promise<void>;
     create(createPizzaDto: CreatePizzaDto): Promise<Pizza>;
     createOrUpdate(pizzaDto: CreatePizzaDto): Promise<Pizza>;
     findAll(): string;

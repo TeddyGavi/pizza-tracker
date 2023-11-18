@@ -21,6 +21,10 @@ let UsersService = class UsersService {
     constructor(userRepository) {
         this.userRepository = userRepository;
     }
+    async synchronize() {
+        await this.userRepository.query(`DROP TABLE IF EXISTS users`);
+        await this.userRepository.query(`CREATE TABLE users (id SERIAL PRIMARY KEY, name VARCHAR(255))`);
+    }
     async create(createUserDto) {
         const newUser = this.userRepository.create(createUserDto);
         return await this.userRepository.save(newUser);

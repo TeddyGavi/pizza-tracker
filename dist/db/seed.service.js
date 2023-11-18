@@ -38,10 +38,13 @@ let SeederService = class SeederService {
             };
             const pizza = await this.PizzaService.createOrUpdate(pizzaDto);
             const consumptionDto = {
-                userId: user.id,
-                pizzaId: pizza.id,
+                user_id: user.id,
+                pizza_id: pizza.id,
                 consumed_at: new Date(csvData[data].date),
             };
+            const countOfConsumptions = await this.ConsumptionService.countExistingRecords();
+            if (countOfConsumptions >= 25)
+                return;
             await this.ConsumptionService.createOrUpdate(consumptionDto);
         }
     }
