@@ -39,19 +39,23 @@ export class PizzasService {
     return await this.pizzaRepository.save(newPizza);
   }
 
-  findAll() {
-    return `This action returns all pizzas`;
+  async findAll() {
+    return await this.pizzaRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} pizza`;
+  async findOne(id: string) {
+    return await this.pizzaRepository.findOne({ where: { id: id } });
   }
 
-  update(id: number, updatePizzaDto: UpdatePizzaDto) {
-    return `This action updates a #${id} pizza`;
+  async update(id: string, updatePizzaDto: UpdatePizzaDto) {
+    const pizza = await this.pizzaRepository.findOne({ where: { id: id } });
+    return await this.pizzaRepository.save({
+      ...pizza,
+      ...UpdatePizzaDto,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} pizza`;
+  async remove(id: string) {
+    return await this.pizzaRepository.delete({ id: id });
   }
 }
