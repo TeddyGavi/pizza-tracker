@@ -45,19 +45,44 @@ export class ConsumptionService {
     const count: number = await this.consumptionRepository.count();
     return count;
   }
-  findAll() {
-    return `This action returns all consumption`;
+  async findAll() {
+    const count = await this.consumptionRepository.count();
+    const records = await this.consumptionRepository.find();
+    return { total: count, ...records };
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} consumption`;
+  // async findOne(userId: string) {
+  //   return await this.consumptionRepository.findOne({
+  //     where: { user_id: userId },
+  //   });
+  // }
+
+  async byMonth(month: number) {
+    console.log(month);
+    const result = await this.consumptionRepository.query(
+      `SELECT DAY(consumed_at) as day_of_month, COUNT(*) as pizzas_count
+    FROM consumptions
+    WHERE MONTH(consumed_at) = ? 
+    GROUP BY DAY(consumed_at)
+    ORDER BY pizzas_count DESC
+    LIMIT 1;`,
+      [month],
+    );
+    console.log(result);
+    return result;
   }
 
-  update(id: number, updateConsumptionDto: UpdateConsumptionDto) {
-    return `This action updates a #${id} consumption`;
+  async update(id: string, updateConsumptionDto: UpdateConsumptionDto) {
+    const consumption = await this.consumptionRepository.findOne({
+      where: { id: id },
+    });
+    return await this.consumptionRepository.save({
+      ...consumption,
+      ...updateConsumptionDto,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} consumption`;
+  async remove(id: string) {
+    return await this.consumptionRepository.delete({ id: id });
   }
 }
