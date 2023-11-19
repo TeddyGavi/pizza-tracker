@@ -58,7 +58,6 @@ export class ConsumptionService {
   // }
 
   async byMonth(month: number) {
-    console.log(month);
     const result = await this.consumptionRepository.query(
       `SELECT DAY(consumed_at) as day_of_month, COUNT(*) as pizzas_count
     FROM consumptions
@@ -68,7 +67,6 @@ export class ConsumptionService {
     LIMIT 1;`,
       [month],
     );
-    console.log(result);
     return result;
   }
 

@@ -39,6 +39,18 @@ export class PizzasService {
     return await this.pizzaRepository.save(newPizza);
   }
 
+  async findByNameOrCreate(pizza: string) {
+    const foundPizza = await this.pizzaRepository.findOne({
+      where: { meat_type: pizza },
+      select: ["id"],
+    });
+    if (!foundPizza) {
+      const newPizza = await this.pizzaRepository.create({ meat_type: pizza });
+      await this.pizzaRepository.save(newPizza);
+      return newPizza;
+    }
+    return foundPizza;
+  }
   async findAll() {
     return await this.pizzaRepository.find();
   }

@@ -45,6 +45,20 @@ export class UsersService {
     return await this.userRepository.find({ where: { id: id } });
   }
 
+  async findByNameOrCreate(name: string) {
+    const foundUser = await this.userRepository.findOne({
+      where: { name: name.toLowerCase().trim() },
+      select: ["id"],
+    });
+    if (!foundUser) {
+      const newUser = await this.userRepository.create({
+        name: name.toLowerCase().trim(),
+      });
+      await this.userRepository.save(newUser);
+      return newUser;
+    }
+    return foundUser;
+  }
   async update(id: string, updateUserDto: UpdateUserDto) {
     const user = await this.userRepository.findOne({ where: { id: id } });
     return await this.userRepository.save({
