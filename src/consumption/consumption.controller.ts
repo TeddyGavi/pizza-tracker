@@ -98,7 +98,11 @@ export class ConsumptionController {
       ) + 1;
     return this.consumptionService.streaks(monthIndex);
   }
+
   @Delete(":id")
+  @ApiOperation({
+    description: "provide the uuid and the consumption will be deleted",
+  })
   remove(@Param("id") id: string) {
     return this.consumptionService.remove(id);
   }

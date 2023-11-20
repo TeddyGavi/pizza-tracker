@@ -75,6 +75,6 @@ export class UsersService {
     const isDelete = await this.userRepository.delete({ name: name });
     return isDelete.affected > 0
       ? { user: `user ${name} deleted` }
-      : { user: "not found" };
+      : { user: "Not found" };
   }
 }

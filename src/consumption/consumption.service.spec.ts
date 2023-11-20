@@ -1,7 +1,7 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { ConsumptionService } from './consumption.service';
+import { Test, TestingModule } from "@nestjs/testing";
+import { ConsumptionService } from "./consumption.service";
 
-describe('ConsumptionService', () => {
+describe("ConsumptionService", () => {
   let service: ConsumptionService;
 
   beforeEach(async () => {
@@ -12,7 +12,7 @@ describe('ConsumptionService', () => {
     service = module.get<ConsumptionService>(ConsumptionService);
   });
 
-  it('should be defined', () => {
+  it("should be defined", () => {
     expect(service).toBeDefined();
   });
 });
