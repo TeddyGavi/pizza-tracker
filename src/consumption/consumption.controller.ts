@@ -16,11 +16,26 @@ import { PizzasService } from "src/pizzas/pizzas.service";
 import { DeepPartial } from "typeorm";
 import {
   ApiBody,
+  ApiOperation,
   ApiProperty,
   ApiPropertyOptional,
   ApiQuery,
   ApiTags,
 } from "@nestjs/swagger";
+const MONTHS = [
+  "jan",
+  "feb",
+  "mar",
+  "apr",
+  "may",
+  "jun",
+  "jul",
+  "aug",
+  "sep",
+  "oct",
+  "nov",
+  "dec",
+];
 
 @ApiTags("Consumptions")
 @Controller("consumptions")
@@ -60,29 +75,29 @@ export class ConsumptionController {
   }
 
   @Get("/by")
+  @ApiOperation({
+    description:
+      "Query for most amount of pizzas/day of month on a given month 3 letter abbreviation corresponding to jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec",
+  })
   findByMonth(@Query("month") qmonth: string) {
-    const months = [
-      "jan",
-      "feb",
-      "mar",
-      "apr",
-      "may",
-      "jun",
-      "jul",
-      "aug",
-      "sep",
-      "oct",
-      "nov",
-      "dec",
-    ];
     const monthIndex =
-      months.findIndex(
+      MONTHS.findIndex(
         (month) => month.toLowerCase() === qmonth.toLowerCase(),
       ) + 1;
     return this.consumptionService.byMonth(monthIndex);
   }
 
   @Get("/streaks")
+  @ApiOperation({
+    description: "Returns all streaks for one month, ignoring Sundays",
+  })
+  streaksByMonth(@Query("month") qmonth: string) {
+    const monthIndex =
+      MONTHS.findIndex(
+        (month) => month.toLowerCase() === qmonth.toLowerCase(),
+      ) + 1;
+    return this.consumptionService.streaks(monthIndex);
+  }
   @Delete(":id")
   remove(@Param("id") id: string) {
     return this.consumptionService.remove(id);

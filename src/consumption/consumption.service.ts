@@ -64,16 +64,37 @@ export class ConsumptionService {
     return result;
   }
 
-  async update(id: string, updateConsumptionDto: UpdateConsumptionDto) {
-    const consumption = await this.consumptionRepository.findOne({
-      where: { id: id },
-    });
-    return await this.consumptionRepository.save({
-      ...consumption,
-      ...updateConsumptionDto,
-    });
-  }
+  async streaks(month: number) {
+    await this.consumptionRepository.query(`
+    DROP VIEW IF EXISTS pizza_count_view`);
+    await this.consumptionRepository.query(`
+    CREATE VIEW pizza_count_view AS
+    SELECT u.name AS person, p.meat_type AS pizza, DATE(c.consumed_at) AS consumed_date, COUNT(*) AS pizzas_count
+    FROM consumptions c
+    JOIN users u ON c.user_id = u.id
+    JOIN pizzas p ON c.pizza_id = p.id 
+    GROUP BY person, pizza, DATE(consumed_at)`);
 
+    const result = await this.consumptionRepository.query(
+      `SELECT
+        DATE_FORMAT(start_date, '%Y-%m-%d') as start_date, 
+        pizzas_consumed
+        FROM (
+          SELECT
+            DATE(consumed_at) AS start_date,
+            COUNT(*) AS pizzas_consumed,
+            LAG(COUNT(*), 1, 0) OVER (ORDER BY DATE(consumed_at)) AS prev_pizzas_consumed
+          FROM consumptions
+          WHERE DAYOFWEEK(consumed_at) != 1 AND
+          MONTH(consumed_at) = ?
+          GROUP BY DATE(consumed_at)
+          HAVING pizzas_consumed > 0
+    ) AS subquery
+    WHERE pizzas_consumed > prev_pizzas_consumed;`,
+      [month],
+    );
+    return result;
+  }
   async remove(id: string) {
     return await this.consumptionRepository.delete({ id: id });
   }
