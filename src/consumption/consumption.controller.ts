@@ -82,19 +82,7 @@ export class ConsumptionController {
     return this.consumptionService.byMonth(monthIndex);
   }
 
-  // @Get(":userId")
-  // findOne(@Param("userId") userId: string) {
-  //   return this.consumptionService.findOne(userId);
-  // }
-
-  // @Patch(":id")
-  // update(
-  //   @Param("id") id: string,
-  //   @Body() updateConsumptionDto: UpdateConsumptionDto,
-  // ) {
-  //   return this.consumptionService.update(id, updateConsumptionDto);
-  // }
-
+  @Get("/streaks")
   @Delete(":id")
   remove(@Param("id") id: string) {
     return this.consumptionService.remove(id);
