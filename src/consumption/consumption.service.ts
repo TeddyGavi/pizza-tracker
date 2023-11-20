@@ -51,12 +51,6 @@ export class ConsumptionService {
     return { total: count, ...records };
   }
 
-  // async findOne(userId: string) {
-  //   return await this.consumptionRepository.findOne({
-  //     where: { user_id: userId },
-  //   });
-  // }
-
   async byMonth(month: number) {
     const result = await this.consumptionRepository.query(
       `SELECT DAY(consumed_at) as day_of_month, COUNT(*) as pizzas_count
