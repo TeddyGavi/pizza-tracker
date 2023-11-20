@@ -41,33 +41,40 @@ export class UsersService {
     return await this.userRepository.find();
   }
 
-  async findOne(id: string) {
-    return await this.userRepository.find({ where: { id: id } });
+  async findOne(name: string) {
+    const user = await this.userRepository.findOne({ where: { name: name } });
+    return user ? user : { user: "Not found" };
   }
 
   async findByNameOrCreate(name: string) {
+    const sanitizedName = name.toLowerCase().trim();
     const foundUser = await this.userRepository.findOne({
-      where: { name: name.toLowerCase().trim() },
+      where: { name: sanitizedName },
       select: ["id"],
     });
     if (!foundUser) {
-      const newUser = await this.userRepository.create({
-        name: name.toLowerCase().trim(),
+      const newUser = this.userRepository.create({
+        name: sanitizedName,
       });
       await this.userRepository.save(newUser);
       return newUser;
     }
     return foundUser;
   }
-  async update(id: string, updateUserDto: UpdateUserDto) {
-    const user = await this.userRepository.findOne({ where: { id: id } });
-    return await this.userRepository.save({
-      ...user,
-      ...updateUserDto,
-    });
+  async update(name: string, updateUserDto: UpdateUserDto) {
+    const user = await this.userRepository.findOne({ where: { name: name } });
+    if (user) {
+      user.name = updateUserDto.name;
+      return await this.userRepository.save(user);
+    } else {
+      return { user: "Not found" };
+    }
   }
 
-  async remove(id: string) {
-    return await this.userRepository.delete({ id: id });
+  async remove(name: string) {
+    const isDelete = await this.userRepository.delete({ name: name });
+    return isDelete.affected > 0
+      ? { user: `user ${name} deleted` }
+      : { user: "not found" };
   }
 }

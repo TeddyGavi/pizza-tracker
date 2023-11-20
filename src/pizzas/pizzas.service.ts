@@ -40,12 +40,15 @@ export class PizzasService {
   }
 
   async findByNameOrCreate(pizza: string) {
+    const sanitizedPizzaName = pizza.toLowerCase().trim();
     const foundPizza = await this.pizzaRepository.findOne({
-      where: { meat_type: pizza },
+      where: { meat_type: sanitizedPizzaName },
       select: ["id"],
     });
     if (!foundPizza) {
-      const newPizza = await this.pizzaRepository.create({ meat_type: pizza });
+      const newPizza = this.pizzaRepository.create({
+        meat_type: sanitizedPizzaName,
+      });
       await this.pizzaRepository.save(newPizza);
       return newPizza;
     }
@@ -55,19 +58,29 @@ export class PizzasService {
     return await this.pizzaRepository.find();
   }
 
-  async findOne(id: string) {
-    return await this.pizzaRepository.findOne({ where: { id: id } });
-  }
-
-  async update(id: string, updatePizzaDto: UpdatePizzaDto) {
-    const pizza = await this.pizzaRepository.findOne({ where: { id: id } });
-    return await this.pizzaRepository.save({
-      ...pizza,
-      ...UpdatePizzaDto,
+  async findOne(meatType: string) {
+    const pizza = await this.pizzaRepository.findOne({
+      where: { meat_type: meatType },
     });
+    return pizza ? pizza : { pizza: "Not found" };
   }
 
-  async remove(id: string) {
-    return await this.pizzaRepository.delete({ id: id });
+  async update(meatType: string, updatePizzaDto: UpdatePizzaDto) {
+    const pizza = await this.pizzaRepository.findOne({
+      where: { meat_type: meatType },
+    });
+    if (pizza) {
+      pizza.meat_type = updatePizzaDto.meat_type;
+      return await this.pizzaRepository.save(pizza);
+    } else {
+      return { pizza: "Not found" };
+    }
+  }
+
+  async remove(meatType: string) {
+    const isDelete = await this.pizzaRepository.delete({ meat_type: meatType });
+    return isDelete.affected > 0
+      ? { pizza: `${meatType} pizza deleted` }
+      : { pizza: "not found" };
   }
 }

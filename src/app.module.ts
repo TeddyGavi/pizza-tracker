@@ -1,6 +1,4 @@
 import { Module } from "@nestjs/common";
-import { AppController } from "./app.controller";
-import { AppService } from "./app.service";
 import { PizzasModule } from "./pizzas/pizzas.module";
 import { UsersModule } from "./users/users.module";
 import { ConfigModule } from "@nestjs/config";
@@ -34,7 +32,6 @@ import { ConsumptionService } from "./consumption/consumption.service";
     ConsumptionModule,
     DBModule,
   ],
-  controllers: [AppController],
-  providers: [AppService, SeederService, CsvService],
+  providers: [SeederService, CsvService],
 })
 export class AppModule {}

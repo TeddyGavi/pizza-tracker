@@ -3,8 +3,6 @@ import { ConsumptionService } from "./consumption.service";
 import { ConsumptionController } from "./consumption.controller";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Consumption } from "./entities/consumption.entity";
-import { PizzasService } from "src/pizzas/pizzas.service";
-import { UsersService } from "src/users/users.service";
 import { PizzasModule } from "src/pizzas/pizzas.module";
 import { UsersModule } from "src/users/users.module";
 

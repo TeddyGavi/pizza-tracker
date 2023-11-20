@@ -1,3 +1,4 @@
+import { ApiProperty } from "@nestjs/swagger";
 import { IsDate, IsString } from "class-validator";
 
 export class CreateConsumptionDto {
@@ -9,4 +10,9 @@ export class CreateConsumptionDto {
 
   @IsDate()
   consumed_at: Date;
+
+  @ApiProperty({ example: "billy" })
+  userName?: string;
+  @ApiProperty({ example: "ham" })
+  pizzaName?: string;
 }

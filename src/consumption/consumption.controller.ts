@@ -13,7 +13,16 @@ import { CreateConsumptionDto } from "./dto/create-consumption.dto";
 import { UpdateConsumptionDto } from "./dto/update-consumption.dto";
 import { UsersService } from "src/users/users.service";
 import { PizzasService } from "src/pizzas/pizzas.service";
+import { DeepPartial } from "typeorm";
+import {
+  ApiBody,
+  ApiProperty,
+  ApiPropertyOptional,
+  ApiQuery,
+  ApiTags,
+} from "@nestjs/swagger";
 
+@ApiTags("Consumptions")
 @Controller("consumptions")
 export class ConsumptionController {
   constructor(
@@ -23,12 +32,20 @@ export class ConsumptionController {
   ) {}
 
   @Post()
+  @ApiBody({
+    type: CreateConsumptionDto,
+    description:
+      "Provide the meat type of the pizza and the user name to create a new consumption, if either do not exist a new pizza or user will be created",
+  })
   async create(
-    @Body() name: string,
-    pizza: string,
+    @Body() createConsumptionDto: CreateConsumptionDto,
   ): Promise<CreateConsumptionDto> {
-    const findUser = await this.userService.findByNameOrCreate(name);
-    const findPizza = await this.pizzaService.findByNameOrCreate(pizza);
+    const findUser = await this.userService.findByNameOrCreate(
+      createConsumptionDto.userName,
+    );
+    const findPizza = await this.pizzaService.findByNameOrCreate(
+      createConsumptionDto.pizzaName,
+    );
     const newConsumption: CreateConsumptionDto = {
       user_id: findUser.id,
       pizza_id: findPizza.id,
