@@ -9,6 +9,8 @@ import { Repository } from "typeorm";
 import { getRepositoryToken } from "@nestjs/typeorm";
 import { User } from "src/users/entities/user.entity";
 import { Pizza } from "src/pizzas/entities/pizza.entity";
+import { UsersModule } from "src/users/users.module";
+import { PizzasModule } from "src/pizzas/pizzas.module";
 describe("ConsumptionService", () => {
   let service: ConsumptionService;
   let consumptionRepository: Repository<Consumption>;
@@ -24,9 +26,17 @@ describe("ConsumptionService", () => {
       providers: [
         UsersService,
         PizzasService,
-        ConsumptionModule,
+        ConsumptionService,
         {
           provide: consumptionToken,
+          useValue: { create: jest.fn() },
+        },
+        {
+          provide: userToken,
+          useValue: { create: jest.fn() },
+        },
+        {
+          provide: pizzaToken,
           useValue: { create: jest.fn() },
         },
       ],
