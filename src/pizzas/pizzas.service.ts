@@ -13,9 +13,11 @@ export class PizzasService {
   ) {}
 
   async synchronize() {
-    await this.pizzaRepository.query(`DROP TABLE IF EXISTS pizzas`);
+    const pizza = await this.pizzaRepository.exist();
+    if (pizza) return;
+    else await this.pizzaRepository.query(`DROP TABLE IF EXISTS pizzas`);
     await this.pizzaRepository.query(
-      `CREATE TABLE pizzas (id SERIAL PRIMARY KEY, meat_type VARCHAR(255))`,
+      `CREATE TABLE pizzas (id VARCHAR(36) PRIMARY KEY, meat_type VARCHAR(255) NOT NULL)`,
     );
   }
   async create(createPizzaDto: CreatePizzaDto) {

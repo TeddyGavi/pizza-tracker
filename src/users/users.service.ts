@@ -13,9 +13,11 @@ export class UsersService {
   ) {}
 
   async synchronize() {
-    await this.userRepository.query(`DROP TABLE IF EXISTS users`);
+    const users = await this.userRepository.exist();
+    if (users) return;
+    else await this.userRepository.query(`DROP TABLE IF EXISTS users`);
     await this.userRepository.query(
-      `CREATE TABLE users (id SERIAL PRIMARY KEY, name VARCHAR(255))`,
+      `CREATE TABLE users (id VARCHAR(255) PRIMARY KEY NOT NULL, name VARCHAR(255) NOT NULL)`,
     );
   }
 

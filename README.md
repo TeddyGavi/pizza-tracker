@@ -1,3 +1,7 @@
+## Description
+
+- A basic pizza-tracking API that meets the following requirements:
+
 ```shell
 API
 The domain
@@ -19,9 +23,22 @@ for a given month, which day of the month people ate the most pizzas on
 The actual schema of the returned JSON doesn't really matter as long as it's something you believe would be comfortably usable by a client.
 ```
 
-## Description
+# Development
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- It is recommended to run this app using Docker
+
+This app connects to a planetscale account
+
+- Head to `/api-docs` to try out the API after building and running with Docker.
+- Alternatively you can run the DB locally
+
+```bash
+#Build
+docker build -t <your_image_name> .
+
+#Run
+docker run -p 8080:8080 -d <your_image_name>
+```
 
 ## Installation
 
@@ -48,23 +65,7 @@ $ npm run start:prod
 # unit tests
 $ npm run test
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
 ## License
 
 Nest is [MIT licensed](LICENSE).
+```
