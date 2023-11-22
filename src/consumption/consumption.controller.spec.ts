@@ -5,7 +5,7 @@ import { ConsumptionModule } from "./consumption.module";
 
 describe("ConsumptionController", () => {
   let controller: ConsumptionController;
-
+  let service: ConsumptionService;
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [ConsumptionModule],
@@ -13,6 +13,7 @@ describe("ConsumptionController", () => {
       providers: [ConsumptionService],
     }).compile();
 
+    service = module.get<ConsumptionService>(ConsumptionService);
     controller = module.get<ConsumptionController>(ConsumptionController);
   });
 
