@@ -14,6 +14,8 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, swaggerConfig);
 
   SwaggerModule.setup("api-docs", app, document);
-  await app.listen(8080);
+  const port = process.env.NESTJS_APP_DOCKER_PORT;
+  app.enableCors();
+  await app.listen(port);
 }
 bootstrap();
