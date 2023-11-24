@@ -23,31 +23,51 @@ for a given month, which day of the month people ate the most pizzas on
 The actual schema of the returned JSON doesn't really matter as long as it's something you believe would be comfortably usable by a client.
 ```
 
-# Development
+# Getting Started
 
 - It is recommended to run this app using Docker
 
-This app connects to a planetscale account
-
-- Head to `/api-docs` to try out the API after building and running with Docker.
-- Alternatively you can run the DB locally
+- Clone the repo
+```
+git clone git@github.com:TeddyGavi/pizza-tracker.git
+cd pizza-tracker
+npm i
+```
+- create a copy of the `.env-template`
 
 ```bash
-#Build
-docker build -t <your_image_name> .
-
-#Run
-docker run -p 8080:8080 -d <your_image_name>
+cp .env-template .env
 ```
 
-## Installation
+- To connect to a remote DB head to `./db/db.module.ts` and modify the required configuration `env` variables and `./env` as needed. 
+
+- To run locally:
 
 ```bash
-$ npm install
+npm run start:docker
+
+# OR if you have built the container
+
+docker-compose up 
+```
+- Head to `localhost:8080/api-docs` to try out the API after building and running with Docker.
+
+- Alternatively you can run the DB in Docker independently 
+
+```bash
+npm run start:db
+```
+- Head to the `.env` and double check the following:
+
+```bash
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=root
+DB_DATABASE=pizza_tracker
+DB_PORT=3306
 ```
 
-## Running the app
-
+- Now run  standard Nestjs commands:
 ```bash
 # development
 $ npm run start
@@ -58,7 +78,6 @@ $ npm run start:dev
 # production mode
 $ npm run start:prod
 ```
-
 ## Test
 
 ```bash

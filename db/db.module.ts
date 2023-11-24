@@ -1,31 +1,30 @@
 import { Module } from "@nestjs/common";
 import { CsvService } from "./csv.service";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { ConfigModule } from "@nestjs/config";
+import { ConfigModule, ConfigService } from "@nestjs/config";
 
-console.log({
-  host: process.env.DB_HOST || "host.docker.internal",
-  port: +process.env.DB_PORT,
-  username: process.env.DB_USER || "root",
-  password: process.env.DB_PASSWORD || "",
-  database: process.env.DB_DATABASE || "pizza_tracker",
-});
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    TypeOrmModule.forRoot({
-      // url: process.env.DATABASE_URL,
-      type: "mysql",
-      host: process.env.DB_HOST || "host.docker.internal",
-      port: +process.env.DB_PORT,
-      username: process.env.DB_USER || "root",
-      password: process.env.DB_PASSWORD || "",
-      database: process.env.DB_DATABASE || "pizza_tracker",
-      autoLoadEntities: true,
-      synchronize: true,
-      ssl: {
-        rejectUnauthorized: true,
-      },
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        name: "default",
+        type: "mysql",
+        host: configService.get("DB_HOST"),
+        port: +configService.get("DB_PORT"),
+        username: configService.get("DB_USER"),
+        password: configService.get("DB_PASSWORD"),
+        database: configService.get("DB_DATABASE"),
+        autoLoadEntities: true,
+        synchronize: true,
+        retryDelay: 10000,
+        retryAttempts: 10,
+        ssl: {
+          rejectUnauthorized: false,
+        },
+      }),
     }),
   ],
   providers: [CsvService],

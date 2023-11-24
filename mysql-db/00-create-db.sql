@@ -1,1 +1,2 @@
-CREATE DATABASE pizza_tracker;
+CREATE DATABASE IF NOT EXISTS pizza_tracker;
+
